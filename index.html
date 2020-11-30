@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test google map</title>
+    <style media="screen">
+        #map {
+            height: 680px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+     
+const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let labelIndex = 0;
+
+function initMap() {
+  const uluru = { lat: 55.740539, lng: 37.628001 };
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 15,
+    center: uluru,
+  });
+  
+  google.maps.event.addListener(map, "click", (event) => {
+    addMarker(event.latLng, map);
+  });
+  
+  
+  addMarker(uluru, map);
+}
+let infowindow = new google.maps.InfoWindow({
+                content: '<h3>test</h3>'
+            });
+            map.addListener("click", () => {
+                infowindow.open(map, marker);
+            });
+
+function addMarker(location, map) {
+  
+  new google.maps.Marker({
+    position: location,
+    label: labels[labelIndex++ % labels.length],
+    map: map,
+  });
+  
+}
+    </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbZFTsBPGhfajdf19OxYUjR4Ag00zViyw&callback=initMap&libraries=&v=weekly"
+        defer></script>
+</body>
+</html>
